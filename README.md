@@ -1,6 +1,6 @@
 # ListPicker
 
-TODO: Write a gem description
+Library for prompting users for input
 
 ## Installation
 
@@ -20,7 +20,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'list_picker'
+
+array = %w{ Option1 Option2 Option3 }
+chosen_option = ListPicker::Picker.new(array).ask("Please select from list of available options")
+```
+
+### Using objects
+
+You can use objects and define method that will be used to be displayed in the list. In order to do that, you can pass in options to the constructor:
+
+```ruby
+require 'list_picker'
+
+array = (1..10).map do |i|
+	Time.new(Time.now.year + i)
+end
+
+chosen_option = ListPicker::Picker.new(array, label_method: :year).ask("Please select a year from the list")
+```
+
+### Batch mode
+
+ListPicker reads arguments passed into the script so that you can predefine your ansers. For instance:
+
+Take for example file *test.rb* with contents:
+```ruby
+require 'list_picker'
+
+array = (1..10).map do |i|
+	Time.new(Time.now.year + i)
+end
+
+chosen_option = ListPicker::Picker.new(array, label_method: :year).ask("Please select a year from the list")
+```
+You can then invoke it by calling:
+
+```ruby
+ruby test.rb 4
+```
+
+This will have preselected 4th option from the list
 
 ## Contributing
 
